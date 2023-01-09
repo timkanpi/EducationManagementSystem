@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="RU" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Детальная карточка студента</title>
+</head>
+<body>
+
+<form th:action="@{/student/{id}(id=${student.id})}" th:method="post" th:object="${student}">
+    <div>
+        <input th:field="*{name}" type="text">
+    </div>
+    <button type="submit">Обновить</button>
+</form>
+
+<form th:action="@{/student/{id}(id=${student.id})}" th:method="delete" th:object="${student}">
+    <button type="submit">Удалить</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="RU" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список студентов</title>
+</head>
+<body>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Имя2</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="student : ${students}">
+        <td th:text="${student.id}">Id</td>
+        <td>
+            <a th:href="@{|/student/${student.id}|}" th:text="${student.name}"></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
