@@ -1,20 +1,28 @@
-<!DOCTYPE html>
-<html lang="RU" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Детальная карточка студента</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/header.html :: headMeta (title = 'Детальная карточка студента')"></head>
 <body>
+<header th:replace="fragments/header.html :: header"></header>
+
 
 <form th:action="@{/student/{id}(id=${student.id})}" th:method="post" th:object="${student}">
     <div>
-        <input th:field="*{name}" type="text">
+        <label for="name">Имя студента</label>
+        <input id="name" type="text" th:field="*{name}" >
     </div>
-    <button type="submit">Обновить</button>
+    <div>
+        <label for="age">Возраст студента</label>
+        <input id="age" type="number" th:field="*{age}" >
+    </div>
+    <div>
+        <label for="group">Группа</label>
+        <input id="group" type="text" th:field="*{group.name}" >
+    </div>
+
+    <button class="btn btn-primary" type="submit">Обновить</button>
 </form>
 
 <form th:action="@{/student/{id}(id=${student.id})}" th:method="delete" th:object="${student}">
-    <button type="submit">Удалить</button>
+    <button class="btn btn-primary" type="submit">Удалить</button>
 </form>
 
 </body>

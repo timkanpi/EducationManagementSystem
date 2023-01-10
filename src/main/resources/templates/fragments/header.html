@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+
+<head th:fragment="headMeta(title)">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="'Dashboard | ' + ${title}"></title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+
+</head>
+
+
+<nav class="navbar navbar-expand navbar-dark bg-dark" aria-label="Second navbar example" th:fragment="header">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Система управления образованием</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample02"
+                aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/student}">Студенты</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/group}">Группы</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+     th:fragment="breadcrumb (currentPage)">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/dashboard}">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page" th:text="${currentPage}"></li>
+        </ol>
+    </nav>
+</div>
+
+</body>
+</html>

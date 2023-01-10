@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.sber.EducationManagementSystem.entity.Group;
 import ru.sber.EducationManagementSystem.entity.Student;
+import ru.sber.EducationManagementSystem.service.GroupService;
 import ru.sber.EducationManagementSystem.service.StudentService;
 
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.List;
 public class StudentController {
 
     private final StudentService studentService;
+    private final GroupService groupService;
 
     @GetMapping
     public String getStudents(Model model) {
@@ -31,7 +34,10 @@ public class StudentController {
     public String newStudent(Model model){
         log.debug("Переход на страницу создания студента");
 
+        List<Group> groups = groupService.getAll();
+
         model.addAttribute("student", new Student());
+        model.addAttribute("groups", groups);
         return "student-new";
     }
 
@@ -69,6 +75,4 @@ public class StudentController {
 
         return "redirect:/student";
     }
-
-
 }

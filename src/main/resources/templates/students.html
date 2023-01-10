@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="RU" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Список студентов</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/header.html :: headMeta (title = 'Список студентов')"></head>
 <body>
+<header th:replace="fragments/header.html :: header"></header>
+
 
 <table class="table table-bordered">
     <thead>
@@ -24,7 +22,7 @@
 </table>
 
 <div>
-    <a th:href="@{/student/create}"><button>Создать нового студента</button></a>
+    <a class="btn btn-primary" th:href="@{/student/create}" role="button">Создать нового студента</a>
 </div>
 
 </body>
