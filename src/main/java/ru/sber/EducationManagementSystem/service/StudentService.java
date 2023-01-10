@@ -15,44 +15,25 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
 
-//    List<Student> students = new ArrayList<>() {{
-//        add(new Student(1L, "Pavel"));
-//        add(new Student(2L, "Olga"));
-//    }};
-
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
-
-//        return students;
     }
 
     public Student findById(Long id) {
         return studentRepository.findById(id).orElseThrow(() -> {
-            throw new RuntimeException("Студент не найден");
+            throw new RuntimeException("Студент c id=" + id + " не найден");
         });
-
-//        return students.stream().filter(studentAny -> studentAny.getId().equals(id)).findFirst().orElseThrow(() -> {
-//            throw new RuntimeException("Студент не найден");
-//        });
     }
 
     public void updateStudent(Student student) {
-//        Student oldStudent = students.stream().filter(studentAny -> studentAny.getId().equals(student.getId())).findFirst().orElseThrow(() -> {
-//            throw new RuntimeException("Студент не найден");
-//        });
-//        oldStudent.setName(student.getName());
+        findById(student.getId());
 
-        Student studentFromDatabase = studentRepository.findById(student.getId()).orElseThrow(() -> {
-            throw new RuntimeException("Студент не найден");
-        });
-
-        studentFromDatabase.setName(student.getName());
-
-        studentRepository.save(studentFromDatabase);
+        studentRepository.save(student);
+        log.info("Студент обновлен: {}", student);
     }
 
     public void deleteStudent(Long id) {
-//        students.removeIf(student -> student.getId().equals(id));
+        findById(id);
 
         studentRepository.deleteById(id);
 
@@ -60,8 +41,8 @@ public class StudentService {
     }
 
     public void createStudent(Student student) {
-//        students.add(student);
-
         studentRepository.save(student);
+
+        log.info("Студент создан: {}", student);
     }
 }
