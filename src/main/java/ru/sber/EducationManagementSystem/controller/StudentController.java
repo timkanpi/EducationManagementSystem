@@ -18,48 +18,52 @@ public class StudentController {
 
     private final StudentService studentService;
 
-//    @ModelAttribute("students")
-//    public List<Student> createStudents() {
-//        List<Student> students = studentService.getAllStudents();
-//
-//        students.add(new Student(1L, "Pavel"));
-////        model.addAttribute("students",students);
-//
-//        return students;
-//    }
-
     @GetMapping
     public String getStudents(Model model) {
         List<Student> students = studentService.getAllStudents();
 
         model.addAttribute("students", students);
 
-        return "ListOfStudents";
+        return "students";
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping("/create")
+    public String newStudent(Model model){
+        log.debug("Переход на страницу создания студента");
+
+        model.addAttribute("student", new Student());
+        return "student-new";
+    }
+
+    @PostMapping("/create")
+    public String createStudent(@ModelAttribute Student student){
+
+        studentService.createStudent(student);
+
+        return "redirect:/student";
+    }
+
+    @GetMapping( "/{id}")
     public String getStudent(@PathVariable Long id, Model model) {
 
         Student student = studentService.findById(id);
 
         model.addAttribute("student", student);
 
-        return "studentDetail";
+        return "student-detail";
     }
 
-    @PostMapping(path ="/{id}")
+    @PostMapping("/{id}")
     public String updateStudent(@PathVariable Long id,
                                 Student student) {
 
-//        Student oldStudent = studentService.findById(id);
         studentService.updateStudent(student);
 
         return "redirect:/student";
     }
 
-    @DeleteMapping(path ="/{id}")
+    @DeleteMapping("/{id}")
     public String deleteStudent(@PathVariable Long id) {
-        log.info("Удаляем студента id="+id);
 
         studentService.deleteStudent(id);
 
