@@ -20,7 +20,7 @@
         <select class="form-control selectpicker" th:field="${student.group}" id="group">
 
             <option th:each="group : ${groups}"
-                    th:value="${group}"
+                    th:value="${group.id}"
                     th:text="${group.name}">
             </option>
 
