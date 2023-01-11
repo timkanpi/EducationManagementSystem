@@ -7,7 +7,7 @@
 <form class="row col-md-7 col-lg-8" th:action="@{/lesson/update}" th:method="post" th:object="${lesson}">
     <div>
         <label for="date">Дата проведения занятия</label>
-        <span id="date" type="date" th:field="*{{date}}">
+        <span id="date" type="date" th:field="*{date}">
         </span>
     </div>
 

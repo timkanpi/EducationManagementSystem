@@ -51,10 +51,11 @@ public class StudentController {
 
     @GetMapping( "/{id}")
     public String getStudent(@PathVariable Long id, Model model) {
-
+        List<Group> groups = groupService.getAll();
         Student student = studentService.findById(id);
 
         model.addAttribute("student", student);
+        model.addAttribute("groups", groups);
 
         return "student-detail";
     }
