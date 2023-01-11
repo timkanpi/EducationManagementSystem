@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.sber.EducationManagementSystem.entity.Group;
 import ru.sber.EducationManagementSystem.entity.Student;
 import ru.sber.EducationManagementSystem.service.GroupService;
@@ -52,6 +49,16 @@ public class GroupController {
         groupService.createGroup(group);
 
         return "redirect:/group";
+    }
+
+
+    @GetMapping("/{id}")
+    public String getGroups(@PathVariable Long id, Model model) {
+        Group group = groupService.findById(id);
+
+        model.addAttribute("group", group);
+
+        return "group-detail";
     }
 
 }

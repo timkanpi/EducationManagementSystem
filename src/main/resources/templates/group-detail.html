@@ -1,0 +1,37 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/header.html :: headMeta (title = 'Карточка группы')"></head>
+<body>
+<header th:replace="fragments/header.html :: header"></header>
+
+<div class="col-md-7 col-lg-8">
+
+    <form th:action="@{/group/create}" th:method="post" th:object="${group}">
+        <div class="col-sm-6">
+            <label for="name" class="form-label">Название группы</label>
+            <input class="form-control" id="name" type="text" th:field="*{name}" required>
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Студент</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="student : ${group.students}">
+                <td th:text="${student.id}">Id</td>
+                <td>
+                    <a th:href="@{|/student/${student.id}|}" th:text="${student.name}"></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div>
+            <button class="btn btn-primary" type="submit">Обновить</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

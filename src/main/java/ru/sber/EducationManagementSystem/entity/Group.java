@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "student_group")
+@Table(name = "groups")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Group {
@@ -18,7 +18,6 @@ public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
 
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY,

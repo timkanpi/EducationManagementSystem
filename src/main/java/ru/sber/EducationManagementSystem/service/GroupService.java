@@ -13,9 +13,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GroupService {
 
-    private  final GroupRepository groupRepository;
+    private final GroupRepository groupRepository;
 
-    public void createGroup(Group group){
+    public void createGroup(Group group) {
         groupRepository.save(group);
 
         log.info("Группа создана: {}", group);
@@ -23,5 +23,11 @@ public class GroupService {
 
     public List<Group> getAll() {
         return groupRepository.findAll();
+    }
+
+    public Group findById(Long id) {
+        return groupRepository.findById(id).orElseThrow(() -> {
+            throw new RuntimeException("Группа id=" + id + " не найдена");
+        });
     }
 }
