@@ -5,4 +5,5 @@ values ('group_1'),
 insert into student(name, group_id)
 values ('Pavel', 1),
        ('Olga', 2),
+       ('Tolik', null),
        ('Viktor', 1);

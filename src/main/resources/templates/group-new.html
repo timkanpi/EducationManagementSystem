@@ -16,7 +16,7 @@
             <label for="students">Выберите студентов в группу</label>
             <select class="form-control selectpicker" th:field="*{students}" id="students" multiple>
                 <option th:each="student : ${students}"
-                        th:value="${student}"
+                        th:value="${student.id}"
                         th:text="${student.name}">dip
                 </option>
             </select>

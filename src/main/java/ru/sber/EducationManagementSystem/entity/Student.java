@@ -18,7 +18,7 @@ public class Student {
     private String name;
     private Integer age;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "group_id")
     private Group group;
 
