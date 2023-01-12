@@ -1,0 +1,37 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/header.html :: headMeta (title = 'Список занятий')"></head>
+<body>
+<header th:replace="fragments/header.html :: header"></header>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Занятие</th>
+                    <th>Группа</th>
+                    <th>Дата занятия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="lesson : ${lessons}">
+                    <td th:text="${lesson.id}">Id</td>
+                    <td>
+                        <a th:href="@{|/lesson/${lesson.id}|}" th:text="${lesson.date}"></a>
+                    </td>
+                    <td th:text="${lesson.group.name}">группа</td>
+                    <td th:text="${lesson.date}">дата занятия</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <a class="btn btn-primary" th:href="@{/lesson/create}" role="button">Новое занятие</a>
+        </div>
+    </div>
+</body>
+</html>

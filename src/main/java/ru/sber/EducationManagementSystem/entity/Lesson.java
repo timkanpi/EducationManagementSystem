@@ -7,8 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -25,7 +24,7 @@ public class Lesson {
 
     private String homework;
 
-    @OneToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "group_id")
     private Group group;
 
@@ -33,4 +32,18 @@ public class Lesson {
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Mark> marks;
+
+    @Override
+    public String toString() {
+        return "Lesson{" +
+                "id=" + id +
+                ", date=" + date +
+                ", homework='" + homework + '\'' +
+//                ", group=" + group +
+//                ", teacher=" + teacher +
+//                ", marks=" + marks +
+                '}';
+    }
 }

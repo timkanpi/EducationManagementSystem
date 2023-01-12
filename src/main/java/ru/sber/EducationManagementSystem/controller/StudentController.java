@@ -27,29 +27,29 @@ public class StudentController {
 
         model.addAttribute("students", students);
 
-        return "students";
+        return "student/student-list";
     }
 
     @GetMapping("/create")
-    public String newStudent(Model model){
+    public String newStudent(Model model) {
         log.debug("Переход на страницу создания студента");
 
         List<Group> groups = groupService.getAll();
 
         model.addAttribute("student", new Student());
         model.addAttribute("groups", groups);
-        return "student-new";
+        return "student/student-new";
     }
 
     @PostMapping("/create")
-    public String createStudent(@ModelAttribute Student student){
+    public String createStudent(@ModelAttribute Student student) {
 
         studentService.createStudent(student);
 
         return "redirect:/student";
     }
 
-    @GetMapping( "/{id}")
+    @GetMapping("/{id}")
     public String getStudent(@PathVariable Long id, Model model) {
         List<Group> groups = groupService.getAll();
         Student student = studentService.findById(id);
@@ -57,7 +57,7 @@ public class StudentController {
         model.addAttribute("student", student);
         model.addAttribute("groups", groups);
 
-        return "student-detail";
+        return "student/student-detail";
     }
 
     @PostMapping("/{id}")
@@ -69,7 +69,7 @@ public class StudentController {
         return "redirect:/student";
     }
 
-    @DeleteMapping("/{id}")
+    @GetMapping("/{id}/delete")
     public String deleteStudent(@PathVariable Long id) {
 
         studentService.deleteStudent(id);

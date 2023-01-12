@@ -1,0 +1,117 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/header.html :: headMeta (title = 'Карточка занятия')"></head>
+<body>
+<header th:replace="fragments/header.html :: header"></header>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm col-lg-8">
+
+            <form th:action="@{/lesson/{id}(id=${lesson.id})}" th:method="put" th:object="${lesson}">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label class="form-label" for="date">Дата проведения занятия</label>
+                        <input class="form-control" id="date" type="date" th:field="*{{date}}"></span>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label class="form-label" for="teacher">Преподаватель</label>
+                        <select class="form-control selectpicker" id="teacher" th:field="${lesson.teacher}">
+                            <option th:each="teacher : ${teachers}"
+                                    th:value="${teacher.id}"
+                                    th:text="${teacher.name}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-sm-6 col-lg-8">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Студент</th>
+                                <!--            <th>Оценка</th>-->
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="student : ${lesson.group.students}">
+                                <td th:text="${student.id}">Id</td>
+                                <td>
+                                    <a th:href="@{|/student/${student.id}|}" th:text="${student.name}"></a>
+                                </td>
+
+                                <!--            <td>-->
+                                <!--                <form th:action="@{/mark/create}" th:method="post" th:object="${mark}">-->
+                                <!--                    <input hidden type="text" th:field="${mark.student}" th:value="${student.id}">-->
+                                <!--                    <input hidden type="text" th:field="${mark.lesson}" th:value="${lesson.id}">-->
+                                <!--                    <input type="number" th:value="${mark.rating}">-->
+                                <!--                    <button class="btn btn-primary" type="submit">отправить оценку</button>-->
+                                <!--                </form>-->
+                                <!--            </td>-->
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <button class="btn btn-primary" type="submit">Обновить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <form th:action="@{/mark/addall}" th:method="post" th:object="${markWrapper}">
+
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>Студент</th>
+                    <th>Оценка</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="mark, itemStat : *{marks}">
+                    <td th:text="*{marks[__${itemStat.index}__].student.name}"></td>
+
+<!--                    dasdasdasd-->
+<!--                    <td th:field="${mark.rating}" th:text="${mark.rating}"></td>-->
+
+                    <td>
+<!--                        <input th:field="${mark.properties[__${status.index}__].value}"></input>-->
+                        <input  type="text"  th:field="*{marks[__${itemStat.index}__].rating}" >
+                        <input hidden  type="text"  th:field="*{marks[__${itemStat.index}__].id}" >
+                        <input hidden  type="text"  th:field="*{marks[__${itemStat.index}__].lesson}" >
+                        <input hidden  type="text"  th:field="*{marks[__${itemStat.index}__].student}" >
+                    </td>
+
+
+
+                    <!--            <td>-->
+                    <!--                <form th:action="@{/mark/create}" th:method="post" th:object="${mark}">-->
+                    <!--                    <input hidden type="text" th:field="${mark.student}" th:value="${student.id}">-->
+                    <!--                    <input hidden type="text" th:field="${mark.lesson}" th:value="${lesson.id}">-->
+                    <!--                    <input type="number" th:value="${mark.rating}">-->
+                    <!--                    <button class="btn btn-primary" type="submit">отправить оценку</button>-->
+                    <!--                </form>-->
+                    <!--            </td>-->
+
+                </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-sm-6">
+                    <button class="btn btn-primary" type="submit">Сохранить оценки</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

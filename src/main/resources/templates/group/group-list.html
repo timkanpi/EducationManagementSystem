@@ -1,0 +1,37 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/header.html :: headMeta (title = 'Список групп')"></head>
+<body>
+<header th:replace="fragments/header.html :: header"></header>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Группа</th>
+                    <th>Количество студентов в группе</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="group : ${groups}">
+                    <td th:text="${group.id}">Id</td>
+                    <td>
+                        <a th:href="@{|/group/${group.id}|}" th:text="${group.name}"></a>
+                    </td>
+                    <td th:text="${#lists.size(group.students)}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <a class="btn btn-primary" th:href="@{/group/create}" role="button">Новая группа</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

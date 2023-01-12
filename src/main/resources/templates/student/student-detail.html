@@ -1,0 +1,50 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/header.html :: headMeta (title = 'Создание студента')"></head>
+<body>
+<header th:replace="fragments/header.html :: header"></header>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm col-lg-8">
+
+            <form th:action="@{/student/{id}(id=${student.id})}" th:method="post" th:object="${student}">
+                <div class="col-sm-6">
+                    <label class="form-label" for="name">Имя студента</label>
+                    <input class="form-control" id="name" type="text" th:field="*{name}">
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="age">Возраст студента</label>
+                    <input class="form-control" id="age" type="number" th:field="*{age}">
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="course">Курс</label>
+                    <input class="form-control" id="course" type="number" th:field="*{course}">
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label" for="studTicket">Студенческий билет</label>
+                    <input class="form-control" id="studTicket" type="number" th:field="*{studTicket}">
+                </div>
+
+                <div class="col-sm-6 form-group">
+                    <label class="form-label" for="group">Группа</label>
+                    <select class="form-control selectpicker" id="group" th:field="${student.group}" >
+                        <option th:each="group : ${groups}"
+                                th:value="${group.id}"
+                                th:text="${group.name}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-sm-6 mt-3">
+                    <button class="btn btn-primary" type="submit">Обновить</button>
+                    <a class="btn btn-primary" th:href="@{/student/{id}/delete(id=${student.id})}">Удалить</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

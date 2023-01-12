@@ -1,20 +1,19 @@
 package ru.sber.EducationManagementSystem.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.sber.EducationManagementSystem.entity.Group;
-import ru.sber.EducationManagementSystem.entity.Lesson;
 import ru.sber.EducationManagementSystem.entity.Mark;
-import ru.sber.EducationManagementSystem.entity.Teacher;
 import ru.sber.EducationManagementSystem.repository.GroupRepository;
 import ru.sber.EducationManagementSystem.repository.LessonRepository;
 import ru.sber.EducationManagementSystem.repository.MarkRepository;
 import ru.sber.EducationManagementSystem.repository.TeacherRepository;
+import ru.sber.EducationManagementSystem.wrapper.MarksWrapper;
 
 import java.util.List;
 
@@ -39,21 +38,24 @@ public class MarkController {
 
     @GetMapping("/create")
     public String newMark(Model model) {
-//        List<Group> groupList = groupRepository.findAll();
-//        List<Teacher> teacherList = teacherRepository.findAll();
-//
-//        model.addAttribute("groups", groupList);
-//        model.addAttribute("teachers", teacherList);
-//        model.addAttribute("lesson", new Lesson());
 
         return "lesson-new";
     }
 
     @PostMapping("/create")
-    public String createLesson(@ModelAttribute Mark mark){
-
+    public String createLesson(@ModelAttribute Mark mark) {
         markRepository.save(mark);
+
         return "redirect:/lesson/all";
+    }
+
+    @PostMapping(value = "/addall", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    public String addAllMarks(@ModelAttribute("marks") MarksWrapper marks) {
+        List<Mark> markList = marks.getMarks();
+
+        markRepository.saveAll(markList);
+
+        return "redirect:/lesson";
     }
 
 

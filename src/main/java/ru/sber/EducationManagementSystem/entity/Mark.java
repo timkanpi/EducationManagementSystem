@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -16,14 +17,28 @@ public class Mark {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String rating;
+    private Integer rating;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "lesson_id")
     private Lesson lesson;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "student_id")
     private Student student;
 
+
+    public Mark(Lesson lesson, Student student) {
+        this.lesson = lesson;
+        this.student = student;
+    }
+
+    @Override
+    public String toString() {
+        return "Mark{" +
+                "id=" + id +
+                ", rating=" + rating +
+                ", lesson=" + lesson +
+                '}';
+    }
 }

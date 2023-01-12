@@ -27,38 +27,33 @@ public class GroupController {
 
         model.addAttribute("groups", groupList);
 
-        return "groups";
+        return "group/group-list";
     }
 
     @GetMapping("/create")
-    public String newGroup(Model model){
-        Group group = new Group();
-        model.addAttribute("group", group);
-
-
+    public String newGroup(Model model) {
         List<Student> allStudents = studentService.getAllStudents();
 
         model.addAttribute("students", allStudents);
+        model.addAttribute("group", new Group());
 
-
-        return "group-new";
+        return "group/group-new";
     }
 
     @PostMapping("/create")
-    public String createGroup(@ModelAttribute("group") Group group){
+    public String createGroup(@ModelAttribute("group") Group group) {
         groupService.createGroup(group);
 
         return "redirect:/group";
     }
 
-
     @GetMapping("/{id}")
-    public String getGroups(@PathVariable Long id, Model model) {
+    public String getGroup(@PathVariable Long id, Model model) {
         Group group = groupService.findById(id);
 
         model.addAttribute("group", group);
 
-        return "group-detail";
+        return "group/group-detail";
     }
 
 }

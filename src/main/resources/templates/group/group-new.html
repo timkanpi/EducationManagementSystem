@@ -1,0 +1,34 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/header.html :: headMeta (title = 'Новая группа')"></head>
+<body>
+<header th:replace="fragments/header.html :: header"></header>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm col-lg-8">
+
+            <form th:action="@{/group/create}" th:method="post" th:object="${group}">
+                <div class="col-sm-6">
+                    <label class="form-label" for="name" >Название группы</label>
+                    <input class="form-control" id="name" type="text" th:field="*{name}" required>
+                </div>
+
+                <div class="col-sm-6 form-group">
+                    <label class="form-label" for="students">Выберите студентов в группу</label>
+                    <select class="form-control selectpicker" th:field="*{students}" id="students" multiple>
+                        <option th:each="student : ${students}"
+                                th:value="${student.id}"
+                                th:text="${student.name}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-sm-6 mt-3">
+                    <button class="btn btn-primary" type="submit">Создать</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -24,6 +24,11 @@ public class Group {
             cascade = CascadeType.ALL)
     private List<Student> students;
 
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Lesson> lessons;
+
+
     @Override
     public String toString() {
         return "Group{" +
