@@ -36,42 +36,45 @@
 
     <div class="row">
         <form th:action="@{/mark/addall}" th:method="post" th:object="${markWrapper}">
+            <div class="col-sm-8">
+                <table class=" table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Студент</th>
+                        <th>Оценка</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="mark, itemStat : *{marks}">
+                        <td th:text="*{marks[__${itemStat.index}__].student.name}"></td>
 
-            <table class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th>Студент</th>
-                    <th>Оценка</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="mark, itemStat : *{marks}">
-                    <td th:text="*{marks[__${itemStat.index}__].student.name}"></td>
+                        <!--                    dasdasdasd-->
+                        <!--                    <td th:field="${mark.rating}" th:text="${mark.rating}"></td>-->
 
-                    <!--                    dasdasdasd-->
-                    <!--                    <td th:field="${mark.rating}" th:text="${mark.rating}"></td>-->
-
-                    <td>
-                        <!--                        <input th:field="${mark.properties[__${status.index}__].value}"></input>-->
-                        <input type="text" th:field="*{marks[__${itemStat.index}__].rating}">
-                        <input hidden type="text" th:field="*{marks[__${itemStat.index}__].id}">
-                        <input hidden type="text" th:field="*{marks[__${itemStat.index}__].lesson}">
-                        <input hidden type="text" th:field="*{marks[__${itemStat.index}__].student}">
-                    </td>
+                        <td>
+                            <!--                        <input th:field="${mark.properties[__${status.index}__].value}"></input>-->
+                            <input type="text" th:field="*{marks[__${itemStat.index}__].rating}">
+                            <input hidden type="text" th:field="*{marks[__${itemStat.index}__].id}">
+                            <input hidden type="text" th:field="*{marks[__${itemStat.index}__].lesson}">
+                            <input hidden type="text" th:field="*{marks[__${itemStat.index}__].student}">
+                        </td>
 
 
-                    <!--            <td>-->
-                    <!--                <form th:action="@{/mark/create}" th:method="post" th:object="${mark}">-->
-                    <!--                    <input hidden type="text" th:field="${mark.student}" th:value="${student.id}">-->
-                    <!--                    <input hidden type="text" th:field="${mark.lesson}" th:value="${lesson.id}">-->
-                    <!--                    <input type="number" th:value="${mark.rating}">-->
-                    <!--                    <button class="btn btn-primary" type="submit">отправить оценку</button>-->
-                    <!--                </form>-->
-                    <!--            </td>-->
+                        <!--            <td>-->
+                        <!--                <form th:action="@{/mark/create}" th:method="post" th:object="${mark}">-->
+                        <!--                    <input hidden type="text" th:field="${mark.student}" th:value="${student.id}">-->
+                        <!--                    <input hidden type="text" th:field="${mark.lesson}" th:value="${lesson.id}">-->
+                        <!--                    <input type="number" th:value="${mark.rating}">-->
+                        <!--                    <button class="btn btn-primary" type="submit">отправить оценку</button>-->
+                        <!--                </form>-->
+                        <!--            </td>-->
 
-                </tr>
-                </tbody>
-            </table>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
             <div class="row">
                 <div class="col-sm-6">
                     <button class="btn btn-primary" type="submit">Сохранить оценки</button>
