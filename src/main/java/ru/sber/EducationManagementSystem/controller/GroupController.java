@@ -2,6 +2,7 @@ package ru.sber.EducationManagementSystem.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,7 @@ public class GroupController {
         return "group/group-list";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/create")
     public String newGroup(Model model) {
         List<Student> allStudents = studentService.getAllStudents();
@@ -40,6 +42,7 @@ public class GroupController {
         return "group/group-new";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public String createGroup(@ModelAttribute("group") Group group) {
         groupService.createGroup(group);

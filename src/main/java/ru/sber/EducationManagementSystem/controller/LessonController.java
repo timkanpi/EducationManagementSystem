@@ -1,6 +1,7 @@
 package ru.sber.EducationManagementSystem.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +48,7 @@ public class LessonController {
         return "lesson/lesson-new";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public String createLesson(@ModelAttribute Lesson lesson) {
         lessonService.createLesson(lesson);
@@ -70,6 +72,7 @@ public class LessonController {
         return "lesson/lesson-detail";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{id}")
     public String updateLesson(@PathVariable("id") Long id,
                                @ModelAttribute("lesson") Lesson lesson) {
