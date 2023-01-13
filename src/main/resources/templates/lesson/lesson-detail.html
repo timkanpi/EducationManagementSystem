@@ -47,32 +47,15 @@
                     <tbody>
                     <tr th:each="mark, itemStat : *{marks}">
                         <td th:text="*{marks[__${itemStat.index}__].student.name}"></td>
-
-                        <!--                    dasdasdasd-->
-                        <!--                    <td th:field="${mark.rating}" th:text="${mark.rating}"></td>-->
-
                         <td>
-                            <!--                        <input th:field="${mark.properties[__${status.index}__].value}"></input>-->
                             <input type="text" th:field="*{marks[__${itemStat.index}__].rating}">
                             <input hidden type="text" th:field="*{marks[__${itemStat.index}__].id}">
                             <input hidden type="text" th:field="*{marks[__${itemStat.index}__].lesson}">
                             <input hidden type="text" th:field="*{marks[__${itemStat.index}__].student}">
                         </td>
-
-
-                        <!--            <td>-->
-                        <!--                <form th:action="@{/mark/create}" th:method="post" th:object="${mark}">-->
-                        <!--                    <input hidden type="text" th:field="${mark.student}" th:value="${student.id}">-->
-                        <!--                    <input hidden type="text" th:field="${mark.lesson}" th:value="${lesson.id}">-->
-                        <!--                    <input type="number" th:value="${mark.rating}">-->
-                        <!--                    <button class="btn btn-primary" type="submit">отправить оценку</button>-->
-                        <!--                </form>-->
-                        <!--            </td>-->
-
                     </tr>
                     </tbody>
                 </table>
-
             </div>
 
             <div class="row">

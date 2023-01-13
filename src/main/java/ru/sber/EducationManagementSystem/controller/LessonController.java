@@ -4,14 +4,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.sber.EducationManagementSystem.entity.*;
+import ru.sber.EducationManagementSystem.entity.Group;
+import ru.sber.EducationManagementSystem.entity.Lesson;
+import ru.sber.EducationManagementSystem.entity.Student;
+import ru.sber.EducationManagementSystem.entity.Teacher;
 import ru.sber.EducationManagementSystem.repository.GroupRepository;
-import ru.sber.EducationManagementSystem.repository.LessonRepository;
-import ru.sber.EducationManagementSystem.repository.MarkRepository;
 import ru.sber.EducationManagementSystem.repository.TeacherRepository;
+import ru.sber.EducationManagementSystem.service.LessonService;
+import ru.sber.EducationManagementSystem.service.MarkService;
 import ru.sber.EducationManagementSystem.wrapper.MarksWrapper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -20,13 +22,13 @@ import java.util.List;
 public class LessonController {
 
     private final TeacherRepository teacherRepository;
-    private final LessonRepository lessonRepository;
+    private final LessonService lessonService;
     private final GroupRepository groupRepository;
-    private final MarkRepository markRepository;
+    private final MarkService markService;
 
     @GetMapping
     public String getLessons(Model model) {
-        List<Lesson> lessonList = lessonRepository.findAll();
+        List<Lesson> lessonList = lessonService.findAll();
 
         model.addAttribute("lessons", lessonList);
 
@@ -47,7 +49,7 @@ public class LessonController {
 
     @PostMapping("/create")
     public String createLesson(@ModelAttribute Lesson lesson) {
-        lessonRepository.save(lesson);
+        lessonService.createLesson(lesson);
 
         return "redirect:/lesson";
     }
@@ -55,25 +57,11 @@ public class LessonController {
     @GetMapping("/{id}")
     public String getLesson(@PathVariable Long id, Model model) {
         List<Teacher> teacherList = teacherRepository.findAll();
-        Lesson lesson = lessonRepository.findById(id).orElseThrow(() -> {
-            throw new RuntimeException("Занятие c id=" + id + " не найдено");
-        });
+        Lesson lesson = lessonService.findById(id);
 
         List<Student> studentList = lesson.getGroup().getStudents();
 
-        List<Mark> markList = new ArrayList<>();
-
-        for (Student student : studentList) {
-            Mark mark = markRepository.findMarkByLessonIdAndStudentId(lesson.getId(), student.getId())
-                    .orElse(new Mark(lesson, student));
-
-            markList.add(mark);
-        }
-
-        MarksWrapper marksWrapper = new MarksWrapper();
-        marksWrapper.setMarks(markList);
-
-
+        MarksWrapper marksWrapper = markService.getMarkWrapperForStudentListForLesson(lesson, studentList);
 
         model.addAttribute("lesson", lesson);
         model.addAttribute("teachers", teacherList);
@@ -85,13 +73,7 @@ public class LessonController {
     @PostMapping("/{id}")
     public String updateLesson(@PathVariable("id") Long id,
                                @ModelAttribute("lesson") Lesson lesson) {
-        Lesson lessonFromDb = lessonRepository.findById(id).orElseThrow();
-
-        lessonFromDb.setDate(lesson.getDate());
-        lessonFromDb.setHomework(lesson.getHomework());
-        lessonFromDb.setTeacher(lesson.getTeacher());
-
-        lessonRepository.save(lessonFromDb);
+        lessonService.updateLesson(id, lesson);
 
         return "redirect:/lesson";
     }

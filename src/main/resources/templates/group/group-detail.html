@@ -10,7 +10,7 @@
             <form th:action="@{/group/{id}(id=${group.id})}" th:method="post" th:object="${group}">
                 <div class="col-sm-6">
                     <label for="name" class="form-label">Название группы</label>
-                    <input class="form-control" id="name" type="text" th:field="*{name}" required>
+                    <input readonly="readonly" class="form-control" id="name" type="text" th:field="*{name}">
                 </div>
 
                 <div class="col-sm-6 mt-3">
@@ -32,9 +32,9 @@
                     </table>
                 </div>
 
-                <div class="col-sm-6 mt-3">
-                    <button class="btn btn-primary" type="submit">Обновить</button>
-                </div>
+<!--                <div class="col-sm-6 mt-3">-->
+<!--                    <button class="btn btn-primary" type="submit">Обновить</button>-->
+<!--                </div>-->
             </form>
         </div>
     </div>

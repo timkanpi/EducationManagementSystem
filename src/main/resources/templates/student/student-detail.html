@@ -1,5 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:replace="fragments/header.html :: headMeta (title = 'Создание студента')"></head>
+<head th:replace="fragments/header.html :: headMeta (title = 'Детальная карточка студента')"></head>
 <body>
 <header th:replace="fragments/header.html :: header"></header>
 
@@ -43,6 +43,30 @@
                     <a class="btn btn-primary" th:href="@{/student/{id}/delete(id=${student.id})}">Удалить</a>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+            <h4>Успеваемость студента</h4>
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th th:each="mark : ${marks}">
+                        <span th:text="*{mark.lesson.date}">
+
+                        </span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:each="mark : ${marks}">
+                        <p th:text="${mark.rating}"></p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

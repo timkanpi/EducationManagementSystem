@@ -6,8 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.sber.EducationManagementSystem.entity.Group;
+import ru.sber.EducationManagementSystem.entity.Mark;
 import ru.sber.EducationManagementSystem.entity.Student;
 import ru.sber.EducationManagementSystem.service.GroupService;
+import ru.sber.EducationManagementSystem.service.MarkService;
 import ru.sber.EducationManagementSystem.service.StudentService;
 
 import java.util.List;
@@ -20,6 +22,7 @@ public class StudentController {
 
     private final StudentService studentService;
     private final GroupService groupService;
+    private final MarkService markService;
 
     @GetMapping
     public String getStudents(Model model) {
@@ -32,8 +35,6 @@ public class StudentController {
 
     @GetMapping("/create")
     public String newStudent(Model model) {
-        log.debug("Переход на страницу создания студента");
-
         List<Group> groups = groupService.getAll();
 
         model.addAttribute("student", new Student());
@@ -43,7 +44,6 @@ public class StudentController {
 
     @PostMapping("/create")
     public String createStudent(@ModelAttribute Student student) {
-
         studentService.createStudent(student);
 
         return "redirect:/student";
@@ -53,9 +53,12 @@ public class StudentController {
     public String getStudent(@PathVariable Long id, Model model) {
         List<Group> groups = groupService.getAll();
         Student student = studentService.findById(id);
+        List<Mark> marks = markService.findMarksByStudentId(id);
+
 
         model.addAttribute("student", student);
         model.addAttribute("groups", groups);
+        model.addAttribute("marks", marks);
 
         return "student/student-detail";
     }
@@ -63,7 +66,6 @@ public class StudentController {
     @PostMapping("/{id}")
     public String updateStudent(@PathVariable Long id,
                                 Student student) {
-
         studentService.updateStudent(student);
 
         return "redirect:/student";
@@ -71,7 +73,6 @@ public class StudentController {
 
     @GetMapping("/{id}/delete")
     public String deleteStudent(@PathVariable Long id) {
-
         studentService.deleteStudent(id);
 
         return "redirect:/student";
