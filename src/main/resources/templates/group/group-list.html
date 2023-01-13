@@ -1,4 +1,7 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
 <head th:replace="fragments/header.html :: headMeta (title = 'Список групп')"></head>
 <body>
 <header th:replace="fragments/header.html :: header"></header>
@@ -26,7 +29,7 @@
             </table>
         </div>
     </div>
-    <div class="row">
+    <div class="row" sec:authorize="hasRole('ADMIN')">
         <div>
             <a class="btn btn-primary" th:href="@{/group/create}" role="button">Новая группа</a>
         </div>

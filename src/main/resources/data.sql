@@ -1,4 +1,10 @@
-insert into USERS(login, password)
+
+insert into ROLES (NAME)
+values ('ROLE_ADMIN'),
+       ('ROLE_STUDENT'),
+       ('ROLE_TEACHER');
+
+insert into USERS(username, password)
 values ('pavel', '1'),
        ('olga', '1'),
        ('tolik', '1'),
@@ -8,6 +14,11 @@ values ('pavel', '1'),
        ('teacher2', '1'),
        ('teacher3', '1'),
        ('petr', '1');
+
+insert into USERS_ROLES
+values(1, 1),
+       (2, 2);
+
 
 insert into TEACHER(name, user_id)
 values ('Учитель 1', 5),

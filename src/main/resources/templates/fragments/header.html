@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<body>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:th="http://www.thymeleaf.org"
+      lang="en">
 
 <head th:fragment="headMeta(title)">
     <meta charset="utf-8">
@@ -10,10 +10,9 @@
     <!-- Bootstrap core CSS -->
     <link th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/css/dashboard.css}" rel="stylesheet">
-
 </head>
 
-
+<body>
 <nav class="navbar navbar-expand navbar-dark bg-dark" aria-label="Second navbar example" th:fragment="header">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Система управления образованием</a>
@@ -37,6 +36,21 @@
                     <a class="nav-link" th:href="@{/lesson}">Занятия</a>
                 </li>
             </ul>
+
+            <div sec:authorize="!isAuthenticated()">
+                <span class="navbar-text mr-3">
+                    <a class="btn btn-primary" th:href="@{/login}" role="button">Login</a>
+                </span>
+            </div>
+
+            <div sec:authorize="isAuthenticated()">
+                <span class="navbar-text mr-3">
+                    Пользователь: <span sec:authentication="name"></span>
+                </span>
+                <span class="navbar-text mr-3">
+                    <a class="btn btn-primary" th:href="@{/logout}" role="button">Logout</a>
+                </span>
+            </div>
         </div>
     </div>
 </nav>

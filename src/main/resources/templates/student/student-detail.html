@@ -1,4 +1,7 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
 <head th:replace="fragments/header.html :: headMeta (title = 'Детальная карточка студента')"></head>
 <body>
 <header th:replace="fragments/header.html :: header"></header>
@@ -38,7 +41,7 @@
                     </select>
                 </div>
 
-                <div class="col-sm-6 mt-3">
+                <div class="col-sm-6 mt-3" sec:authorize="hasRole('ADMIN')">
                     <button class="btn btn-primary" type="submit">Обновить</button>
                     <a class="btn btn-primary" th:href="@{/student/{id}/delete(id=${student.id})}">Удалить</a>
                 </div>

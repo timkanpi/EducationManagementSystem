@@ -1,4 +1,6 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
 <head th:replace="fragments/header.html :: headMeta (title = 'Карточка группы')"></head>
 <body>
 <header th:replace="fragments/header.html :: header"></header>
@@ -10,7 +12,7 @@
             <form th:action="@{/group/{id}(id=${group.id})}" th:method="post" th:object="${group}">
                 <div class="col-sm-6">
                     <label for="name" class="form-label">Название группы</label>
-                    <input readonly="readonly" class="form-control" id="name" type="text" th:field="*{name}">
+                    <input readonly="readonly" disabled class="form-control" id="name" type="text" th:field="*{name}">
                 </div>
 
                 <div class="col-sm-6 mt-3">
@@ -31,10 +33,6 @@
                         </tbody>
                     </table>
                 </div>
-
-<!--                <div class="col-sm-6 mt-3">-->
-<!--                    <button class="btn btn-primary" type="submit">Обновить</button>-->
-<!--                </div>-->
             </form>
         </div>
     </div>
