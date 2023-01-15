@@ -10,16 +10,19 @@
             <form th:action="@{/group/create}" th:method="post" th:object="${group}">
                 <div class="col-sm-6">
                     <label class="form-label" for="name" >Название группы</label>
-                    <input class="form-control" id="name" type="text" th:field="*{name}" required>
+                    <input class="form-control" id="name" type="text" th:field="*{name}">
+                    <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"/>
                 </div>
 
                 <div class="col-sm-6 form-group">
                     <label class="form-label" for="students">Выберите студентов в группу</label>
                     <select class="form-control selectpicker" th:field="*{students}" id="students" multiple>
                         <option th:each="student : ${students}"
-                                th:value="${student.id}"
+                                th:value="${{student}}"
+
                                 th:text="${student.name}">
                         </option>
+<!--                                th:value="${student.id}"-->
                     </select>
                 </div>
 

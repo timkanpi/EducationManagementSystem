@@ -11,26 +11,31 @@
                 <div class="col-sm-6">
                     <label class="form-label" for="name">Имя студента</label>
                     <input class="form-control" id="name" type="text" th:field="*{name}">
+                    <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"/>
                 </div>
 
                 <div class="col-sm-6">
                     <label class="form-label" for="age">Возраст студента</label>
                     <input class="form-control" id="age" type="number" th:field="*{age}">
+                    <p th:if="${#fields.hasErrors('age')}" th:errorclass="error" th:errors="*{age}"/>
                 </div>
 
                 <div class="col-sm-6">
                     <label class="form-label" for="course">Курс</label>
                     <input class="form-control" id="course" type="number" th:field="*{course}">
+                    <p th:if="${#fields.hasErrors('course')}" th:errorclass="error" th:errors="*{course}"/>
                 </div>
 
                 <div class="col-sm-6">
                     <label class="form-label" for="studTicket">Студенческий билет</label>
                     <input class="form-control" id="studTicket" type="number" th:field="*{studTicket}">
+                    <p th:if="${#fields.hasErrors('studTicket')}" th:errorclass="error" th:errors="*{studTicket}"/>
                 </div>
 
                 <div class="col-sm-6 form-group">
                     <label class="form-label" for="group">Группа</label>
                     <select class="form-control selectpicker" th:field="${student.group}" id="group">
+                        <option th:value="NULL" th:text="NULL"></option>
                         <option th:each="group : ${groups}"
                                 th:value="${group.id}"
                                 th:text="${group.name}">

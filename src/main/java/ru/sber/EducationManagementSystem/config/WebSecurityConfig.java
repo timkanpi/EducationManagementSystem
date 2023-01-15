@@ -1,5 +1,7 @@
 package ru.sber.EducationManagementSystem.config;
 
+import lombok.AllArgsConstructor;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,12 +13,13 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import ru.sber.EducationManagementSystem.service.UserService;
 
 @Configuration
+@AllArgsConstructor
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     private UserService userService;
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

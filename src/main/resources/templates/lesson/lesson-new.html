@@ -11,6 +11,8 @@
                 <div class="col-sm-6">
                     <label class="form-label" for="date">Дата проведения занятия</label>
                     <input class="form-control" id="date" type="date" th:field="*{date}">
+                    <p th:if="${#fields.hasErrors('date')}" th:errorclass="error" th:errors="*{date}"/>
+
                 </div>
 
                 <div class="form-group col-sm-6">

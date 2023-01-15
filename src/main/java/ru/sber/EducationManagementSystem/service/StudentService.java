@@ -45,4 +45,12 @@ public class StudentService {
 
         log.info("Студент создан: {}", student);
     }
+
+    public List<Student> findStudentsWithoutGroup() {
+        List<Student> studentsByGroupIsNull = studentRepository.findStudentsByGroupIsNull();
+
+        return studentsByGroupIsNull;
+    }
+
+
 }

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.sber.EducationManagementSystem.entity.Group;
 import ru.sber.EducationManagementSystem.entity.Mark;
@@ -13,6 +14,7 @@ import ru.sber.EducationManagementSystem.service.GroupService;
 import ru.sber.EducationManagementSystem.service.MarkService;
 import ru.sber.EducationManagementSystem.service.StudentService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -46,7 +48,14 @@ public class StudentController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
-    public String createStudent(@ModelAttribute Student student) {
+    public String createStudent(@Valid @ModelAttribute Student student, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            List<Group> groups = groupService.getAll();
+
+            model.addAttribute("groups", groups);
+            return "student/student-new";
+        }
+
         studentService.createStudent(student);
 
         return "redirect:/student";
@@ -68,7 +77,18 @@ public class StudentController {
 
     @PostMapping("/{id}")
     public String updateStudent(@PathVariable Long id,
-                                Student student) {
+                                @Valid Student student,
+                                BindingResult bindingResult,
+                                Model model) {
+        if (bindingResult.hasErrors()) {
+            List<Group> groups = groupService.getAll();
+            List<Mark> marks = markService.findMarksByStudentId(id);
+
+            model.addAttribute("groups", groups);
+            model.addAttribute("marks", marks);
+            return "student/student-detail";
+        }
+
         studentService.updateStudent(student);
 
         return "redirect:/student";

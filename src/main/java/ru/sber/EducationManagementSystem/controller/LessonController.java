@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.sber.EducationManagementSystem.entity.Group;
 import ru.sber.EducationManagementSystem.entity.Lesson;
@@ -15,6 +16,7 @@ import ru.sber.EducationManagementSystem.service.LessonService;
 import ru.sber.EducationManagementSystem.service.MarkService;
 import ru.sber.EducationManagementSystem.wrapper.MarksWrapper;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -50,7 +52,19 @@ public class LessonController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
-    public String createLesson(@ModelAttribute Lesson lesson) {
+    public String createLesson(@Valid @ModelAttribute Lesson lesson,
+                               BindingResult bindingResult,
+                               Model model) {
+        if (bindingResult.hasErrors()) {
+            List<Group> groupList = groupRepository.findAll();
+            List<Teacher> teacherList = teacherRepository.findAll();
+
+            model.addAttribute("groups", groupList);
+            model.addAttribute("teachers", teacherList);
+
+            return "lesson/lesson-new";
+        }
+
         lessonService.createLesson(lesson);
 
         return "redirect:/lesson";
@@ -75,7 +89,20 @@ public class LessonController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{id}")
     public String updateLesson(@PathVariable("id") Long id,
-                               @ModelAttribute("lesson") Lesson lesson) {
+                               @Valid @ModelAttribute("lesson") Lesson lesson,
+                               BindingResult bindingResult,
+                               Model model) {
+        if (bindingResult.hasErrors()) {
+            List<Teacher> teacherList = teacherRepository.findAll();
+            List<Student> studentList = lesson.getGroup().getStudents();
+
+            MarksWrapper marksWrapper = markService.getMarkWrapperForStudentListForLesson(lesson, studentList);
+            model.addAttribute("teachers", teacherList);
+            model.addAttribute("markWrapper", marksWrapper);
+
+            return "lesson/lesson-detail";
+        }
+
         lessonService.updateLesson(id, lesson);
 
         return "redirect:/lesson";

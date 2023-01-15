@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
@@ -18,9 +19,11 @@ public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty(message = "Заполните имя группы")
     private String name;
 
-    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY,
+    @OneToMany(mappedBy = "group", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     private List<Student> students;
 

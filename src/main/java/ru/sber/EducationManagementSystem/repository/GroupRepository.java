@@ -6,4 +6,5 @@ import ru.sber.EducationManagementSystem.entity.Group;
 
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Long> {
+
 }
