@@ -15,14 +15,10 @@ import java.util.List;
 public class GroupService {
 
     private final GroupRepository groupRepository;
-    private final StudentRepository studentRepository;
 
     public void createGroup(Group group) {
+        group.getStudents().forEach(student -> student.setGroup(group));
         Group groupSaved = groupRepository.save(group);
-
-        group.getStudents().forEach(student -> student.setGroup(groupSaved));
-
-        studentRepository.saveAll(group.getStudents());
 
         log.info("Группа создана: {}", groupSaved);
     }
