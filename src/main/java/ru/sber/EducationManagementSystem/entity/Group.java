@@ -23,8 +23,7 @@ public class Group {
     @NotEmpty(message = "Заполните имя группы")
     private String name;
 
-    @OneToMany(mappedBy = "group", fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
     private List<Student> students;
 
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY,

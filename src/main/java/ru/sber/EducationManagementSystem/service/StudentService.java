@@ -47,9 +47,8 @@ public class StudentService {
     }
 
     public List<Student> findStudentsWithoutGroup() {
-        List<Student> studentsByGroupIsNull = studentRepository.findStudentsByGroupIsNull();
 
-        return studentsByGroupIsNull;
+        return studentRepository.findStudentsByGroupIsNull();
     }
 
 
