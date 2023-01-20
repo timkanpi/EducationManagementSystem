@@ -13,21 +13,42 @@ public class LessonService {
 
     private final LessonRepository lessonRepository;
 
-
+    /**
+     * Получить список всех занятий
+     *
+     * @return List занятий
+     */
     public List<Lesson> findAll() {
         return lessonRepository.findAll();
     }
 
+    /**
+     * Найти занятие по id
+     *
+     * @param id id занятия
+     * @return объект занятия
+     */
     public Lesson findById(Long id) {
         return lessonRepository.findById(id).orElseThrow(() -> {
             throw new RuntimeException("Занятие c id=" + id + " не найдено");
         });
     }
 
+    /**
+     * Создать занятие
+     *
+     * @param lesson объект занятие
+     */
     public void createLesson(Lesson lesson) {
         lessonRepository.save(lesson);
     }
 
+    /**
+     * Обновить занятие
+     *
+     * @param id     id занятия
+     * @param lesson объект занятия
+     */
     public void updateLesson(Long id, Lesson lesson) {
         Lesson lessonDb = findById(id);
 
@@ -37,6 +58,4 @@ public class LessonService {
 
         lessonRepository.save(lessonDb);
     }
-
-
 }

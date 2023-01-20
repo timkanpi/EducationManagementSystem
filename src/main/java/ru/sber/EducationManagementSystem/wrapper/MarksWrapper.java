@@ -4,6 +4,10 @@ import ru.sber.EducationManagementSystem.entity.Mark;
 
 import java.util.List;
 
+/**
+ * Класс обертка для списка оценок.
+ * Используется при передаче в атрибуте модели MVC
+ */
 public class MarksWrapper {
     List<Mark> marks;
 

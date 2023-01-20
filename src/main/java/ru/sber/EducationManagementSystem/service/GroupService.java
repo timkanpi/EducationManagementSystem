@@ -15,6 +15,12 @@ public class GroupService {
 
     private final GroupRepository groupRepository;
 
+    /**
+     * Создать группу
+     * В группе передается список студентов. Для каждого студента в группе обновляется свзяь с группой
+     *
+     * @param group Объект группа
+     */
     public void createGroup(Group group) {
         group.getStudents().forEach(student -> student.setGroup(group));
         Group groupSaved = groupRepository.save(group);
@@ -22,10 +28,21 @@ public class GroupService {
         log.info("Группа создана: {}", groupSaved);
     }
 
+    /**
+     * Получить список всех групп
+     *
+     * @return List групп
+     */
     public List<Group> getAll() {
         return groupRepository.findAll();
     }
 
+    /**
+     * найти группу по id
+     *
+     * @param id id группы
+     * @return найденная группа
+     */
     public Group findById(Long id) {
         return groupRepository.findById(id).orElseThrow(() -> {
             throw new RuntimeException("Группа id=" + id + " не найдена");

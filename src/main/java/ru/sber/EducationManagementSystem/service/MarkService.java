@@ -17,8 +17,16 @@ public class MarkService {
 
     private final MarkRepository markRepository;
 
-    public MarksWrapper getMarkWrapperForStudentListForLesson(Lesson lesson, List<Student> studentList) {
+    /**
+     * Получить объект обертку со списком объектов "оценка" для каждого студента в группе, в переданном занятии
+     *
+     * @param lesson занятие
+     * @return объект со списком оценок для студентов в занятии
+     */
+    public MarksWrapper getMarkWrapperForStudentListForLesson(Lesson lesson) {
         List<Mark> markList = new ArrayList<>();
+
+        List<Student> studentList = lesson.getGroup().getStudents();
 
         for (Student student : studentList) {
             Mark mark = markRepository.findMarkByLessonIdAndStudentId(lesson.getId(), student.getId())
@@ -33,6 +41,12 @@ public class MarkService {
         return marksWrapper;
     }
 
+    /**
+     * Получить все оценки для студента
+     *
+     * @param id id студента
+     * @return List оценок
+     */
     public List<Mark> findMarksByStudentId(Long id) {
 
         return markRepository.findMarksByStudentId(id);

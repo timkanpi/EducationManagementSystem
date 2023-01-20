@@ -15,6 +15,10 @@ import ru.sber.EducationManagementSystem.service.StudentService;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * Контроллер для обработки запросов по адресу "/group/.."
+ */
+
 @Slf4j
 @Controller
 @RequestMapping("/group")
@@ -24,6 +28,12 @@ public class GroupController {
     private final GroupService groupService;
     private final StudentService studentService;
 
+    /**
+     * Получить страницу со списком групп
+     *
+     * @param model модель
+     * @return страница "список групп"
+     */
     @GetMapping
     public String getGroups(Model model) {
         List<Group> groupList = groupService.getAll();
@@ -33,6 +43,12 @@ public class GroupController {
         return "group/group-list";
     }
 
+    /**
+     * Получить страницу "Создание группы"
+     *
+     * @param model модель
+     * @return страница "Создание группы"
+     */
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/create")
     public String newGroup(Model model) {
@@ -44,6 +60,14 @@ public class GroupController {
         return "group/group-new";
     }
 
+    /**
+     * Запрос на "создание группы"
+     *
+     * @param group         атрибут модели "Группа"
+     * @param bindingResult результат валидации группы
+     * @param model         модель
+     * @return страница "список групп", если создание прошло успешно
+     */
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public String createGroup(@Valid @ModelAttribute("group") Group group,
@@ -61,6 +85,13 @@ public class GroupController {
         return "redirect:/group";
     }
 
+    /**
+     * Получить детальную информацию о группе
+     *
+     * @param id    id группы
+     * @param model модель
+     * @return страница "детальная карточка группы"
+     */
     @GetMapping("/{id}")
     public String getGroup(@PathVariable Long id, Model model) {
         Group group = groupService.findById(id);

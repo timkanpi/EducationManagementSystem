@@ -19,16 +19,27 @@ import ru.sber.EducationManagementSystem.wrapper.MarksWrapper;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * Контроллер для обработки запросов по адресу "/lesson/.."
+ */
+
+
 @Controller
 @RequestMapping("/lesson")
 @RequiredArgsConstructor
 public class LessonController {
 
     private final TeacherRepository teacherRepository;
-    private final LessonService lessonService;
     private final GroupRepository groupRepository;
+    private final LessonService lessonService;
     private final MarkService markService;
 
+    /**
+     * Получить страницу со списком занятий
+     *
+     * @param model модель
+     * @return страница "список занятий"
+     */
     @GetMapping
     public String getLessons(Model model) {
         List<Lesson> lessonList = lessonService.findAll();
@@ -38,6 +49,12 @@ public class LessonController {
         return "lesson/lesson-list";
     }
 
+    /**
+     * Получить страницу создания занятия
+     *
+     * @param model модель
+     * @return страница "создание занятия"
+     */
     @GetMapping("/create")
     public String newLesson(Model model) {
         List<Group> groupList = groupRepository.findAll();
@@ -50,6 +67,14 @@ public class LessonController {
         return "lesson/lesson-new";
     }
 
+    /**
+     * Создать занятие
+     *
+     * @param lesson        создаваемое занятие
+     * @param bindingResult результат валидации занятия
+     * @param model         модель
+     * @return страница "список групп", если занятие создано успешно, иначе отобразить ошибки
+     */
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public String createLesson(@Valid @ModelAttribute Lesson lesson,
@@ -70,6 +95,13 @@ public class LessonController {
         return "redirect:/lesson";
     }
 
+    /**
+     * Получить детальную информацию занятия
+     *
+     * @param id    id занятия
+     * @param model модель
+     * @return страница "детальная карточка занятия"
+     */
     @GetMapping("/{id}")
     public String getLesson(@PathVariable Long id, Model model) {
         List<Teacher> teacherList = teacherRepository.findAll();
@@ -77,7 +109,8 @@ public class LessonController {
 
         List<Student> studentList = lesson.getGroup().getStudents();
 
-        MarksWrapper marksWrapper = markService.getMarkWrapperForStudentListForLesson(lesson, studentList);
+//        MarksWrapper marksWrapper = markService.getMarkWrapperForStudentListForLesson(lesson, studentList);
+        MarksWrapper marksWrapper = markService.getMarkWrapperForStudentListForLesson(lesson);
 
         model.addAttribute("lesson", lesson);
         model.addAttribute("teachers", teacherList);
@@ -86,6 +119,15 @@ public class LessonController {
         return "lesson/lesson-detail";
     }
 
+    /**
+     * Обновить занятие
+     *
+     * @param id            id занятия
+     * @param lesson        атрибут модели занятие
+     * @param bindingResult результат валидации занятия
+     * @param model         модель
+     * @return страница "список занятий", если обновление прошло успешно
+     */
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{id}")
     public String updateLesson(@PathVariable("id") Long id,
@@ -94,9 +136,8 @@ public class LessonController {
                                Model model) {
         if (bindingResult.hasErrors()) {
             List<Teacher> teacherList = teacherRepository.findAll();
-            List<Student> studentList = lesson.getGroup().getStudents();
 
-            MarksWrapper marksWrapper = markService.getMarkWrapperForStudentListForLesson(lesson, studentList);
+            MarksWrapper marksWrapper = markService.getMarkWrapperForStudentListForLesson(lesson);
             model.addAttribute("teachers", teacherList);
             model.addAttribute("markWrapper", marksWrapper);
 
