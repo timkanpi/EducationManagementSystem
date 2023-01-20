@@ -36,7 +36,6 @@ public class Group {
         return "Group{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", students.size='" + students.size() + '\'' +
                 '}';
     }
 }

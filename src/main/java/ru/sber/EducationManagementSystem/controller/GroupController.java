@@ -25,8 +25,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GroupController {
 
-    private final GroupService groupService;
     private final StudentService studentService;
+    private final GroupService groupService;
 
     /**
      * Получить страницу со списком групп
