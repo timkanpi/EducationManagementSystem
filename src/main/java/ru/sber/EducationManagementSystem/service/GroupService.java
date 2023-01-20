@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sber.EducationManagementSystem.entity.Group;
 import ru.sber.EducationManagementSystem.repository.GroupRepository;
-import ru.sber.EducationManagementSystem.repository.StudentRepository;
 
 import java.util.List;
 

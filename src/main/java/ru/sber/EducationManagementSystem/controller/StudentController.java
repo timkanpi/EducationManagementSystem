@@ -93,6 +93,7 @@ public class StudentController {
 
         return "redirect:/student";
     }
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}/delete")
     public String deleteStudent(@PathVariable Long id) {

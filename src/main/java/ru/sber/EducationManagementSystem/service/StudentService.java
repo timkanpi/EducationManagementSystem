@@ -33,9 +33,9 @@ public class StudentService {
     }
 
     public void deleteStudent(Long id) {
-        findById(id);
+        Student student = findById(id);
 
-        studentRepository.deleteById(id);
+        studentRepository.delete(student);
 
         log.info("Студент id={} удален", id);
     }
