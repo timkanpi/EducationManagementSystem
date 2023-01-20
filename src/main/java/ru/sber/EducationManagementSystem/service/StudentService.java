@@ -3,10 +3,13 @@ package ru.sber.EducationManagementSystem.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.sber.EducationManagementSystem.entity.Role;
 import ru.sber.EducationManagementSystem.entity.Student;
+import ru.sber.EducationManagementSystem.entity.User;
 import ru.sber.EducationManagementSystem.repository.StudentRepository;
 
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -14,6 +17,7 @@ import java.util.List;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    private final RoleRepository roleRepository;
 
     /**
      * Получить всех студентов
@@ -37,6 +41,28 @@ public class StudentService {
     }
 
     /**
+     * Создать студента
+     * Дополнительно создать юзера для возможности авторизации студентом
+     *
+     * @param student объект нового студента
+     */
+    public void createStudent(Student student) {
+        Role roleStudent = roleRepository.findByName("ROLE_STUDENT");
+
+        User user = User.builder()
+                .username("student_" + student.getStudTicket())
+                .password("pass")
+                .roles(Set.of(roleStudent))
+                .build();
+
+        student.setUser(user);
+
+        studentRepository.save(student);
+
+        log.info("Студент создан: {}", student);
+    }
+
+    /**
      * Обновить студента
      *
      * @param student объект студента
@@ -50,6 +76,7 @@ public class StudentService {
 
     /**
      * Удалить студента по id
+     *
      * @param id id студента
      */
     public void deleteStudent(Long id) {
@@ -61,17 +88,8 @@ public class StudentService {
     }
 
     /**
-     * Создать студента
-     * @param student объект нового студента
-     */
-    public void createStudent(Student student) {
-        studentRepository.save(student);
-
-        log.info("Студент создан: {}", student);
-    }
-
-    /**
      * Найти студента без группы
+     *
      * @return List студентов
      */
     public List<Student> findStudentsWithoutGroup() {
