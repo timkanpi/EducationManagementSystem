@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.sber.EducationManagementSystem.config.WebSecurityConfig;
@@ -21,8 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -67,7 +70,7 @@ class GroupControllerTest {
 
     @Test
     @DisplayName("Проверка отображения страницы создания группы")
-    @WithMockUser(username = "duke",roles = "ADMIN")
+    @WithMockUser(username = "duke", roles = "ADMIN")
     void newGroup() throws Exception {
         List<Student> studentsList = new ArrayList<>() {{
             add(new Student(1L, "Студент1", 1, 1, 1, null, null, emptyList()));
@@ -85,10 +88,40 @@ class GroupControllerTest {
     }
 
     @Test
-    void createGroup() {
+    @DisplayName("Проверка создания группы")
+    @WithMockUser(username = "duke", roles = "ADMIN")
+    void createGroup() throws Exception {
+        Group group = new Group(1L, "group_name", emptyList(), emptyList());
+
+        mockMvc.perform(post("/group/create")
+                        .flashAttr("group", group))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/group"));
     }
 
     @Test
-    void getGroup() {
+    @DisplayName("Проверка редиректа на форму логина при создании группы анонимным пользователем")
+    @WithAnonymousUser
+    void createGroupWithAnonymousUser() throws Exception {
+        Group group = new Group(1L, "group_name", emptyList(), emptyList());
+
+        mockMvc.perform(post("/group/create")
+                        .flashAttr("group", group))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost/login"));
+    }
+
+    @Test
+    @DisplayName("Проверка отображения детальной карточки группы")
+    @WithMockUser(username = "duke", roles = "ADMIN")
+    void getGroup() throws Exception {
+        Group group = new Group(1L, "group_name", emptyList(), emptyList());
+
+        when(groupService.findById(any())).thenReturn(group);
+
+        mockMvc.perform(get("/group/{id}", group.getId()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("group/group-detail"))
+                .andExpect(model().attribute("group", group));
     }
 }

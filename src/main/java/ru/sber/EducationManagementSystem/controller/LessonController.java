@@ -23,7 +23,6 @@ import java.util.List;
  * Контроллер для обработки запросов по адресу "/lesson/.."
  */
 
-
 @Controller
 @RequestMapping("/lesson")
 @RequiredArgsConstructor
@@ -107,9 +106,6 @@ public class LessonController {
         List<Teacher> teacherList = teacherRepository.findAll();
         Lesson lesson = lessonService.findById(id);
 
-        List<Student> studentList = lesson.getGroup().getStudents();
-
-//        MarksWrapper marksWrapper = markService.getMarkWrapperForStudentListForLesson(lesson, studentList);
         MarksWrapper marksWrapper = markService.getMarkWrapperForStudentListForLesson(lesson);
 
         model.addAttribute("lesson", lesson);
