@@ -1,18 +1,18 @@
 spring:
   profiles:
     active: h2
-
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
     hibernate:
       ddl-auto: create-drop
     defer-datasource-initialization: true
+    properties:
+      hibernate:
+        format_sql: true
   sql:
     init:
       mode: always
 logging:
   level:
-    org.hibernate.type.descriptor.sql.BasicBinder : TRACE
-
-#spring.mvc.hiddenmethod.filter.enabled=true
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
