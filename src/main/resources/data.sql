@@ -1,4 +1,3 @@
-
 insert into ROLES (NAME)
 values ('ROLE_ADMIN'),
        ('ROLE_STUDENT'),
@@ -9,21 +8,20 @@ values ('pavel', '1'),
        ('olga', '1'),
        ('tolik', '1'),
        ('viktor', '1'),
-       ('viktor', '1'),
        ('teacher1', '1'),
        ('teacher2', '1'),
        ('teacher3', '1'),
        ('petr', '1');
 
 insert into USERS_ROLES
-values(1, 1),
+values (1, 1),
        (2, 2);
 
 
 insert into TEACHER(name, user_id)
-values ('Учитель 1', 5),
-       ('Учитель 2', 6),
-       ('Учитель 3', 7);
+values ('Учитель 1', 6),
+       ('Учитель 2', 7),
+       ('Учитель 3', 8);
 
 insert into GROUPS(name)
 values ('группа 1'),
