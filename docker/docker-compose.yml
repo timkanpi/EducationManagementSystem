@@ -1,0 +1,23 @@
+version: '1.0'
+
+services:
+  db:
+    image: postgres
+    volumes:
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+    ports:
+      - 5432:5432
+
+  education_system:
+    image: my_container
+    profiles:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+
