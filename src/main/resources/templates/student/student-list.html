@@ -29,6 +29,21 @@
                 </tr>
                 </tbody>
             </table>
+
+            <nav aria-label="Page navigation" th:if="${students.totalPages - 1 gt 0}">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item" th:classappend="${students.number eq 0} ? 'disabled'">
+                        <a class="page-link" tabindex="-1" aria-disabled="true" th:href="
+                        @{/student
+                        (page=${students.number lt 2 ? 1 : students.number}, size=${pageSize}, sortBy=${sortBy}, order=${order})}">Previous</a>
+                    </li>
+
+                    <li class="page-item" th:classappend="${students.number + 1 eq students.totalPages} ? 'disabled'">
+                        <a class="page-link" th:href="@{/student
+                        (page=${students.number + 2}, size=${pageSize}, sortBy=${sortBy}, order=${order})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
     <div sec:authorize="hasRole('ADMIN')" class="row">

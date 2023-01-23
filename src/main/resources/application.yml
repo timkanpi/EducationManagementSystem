@@ -16,3 +16,6 @@ spring:
 logging:
   level:
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+page:
+  size: 3

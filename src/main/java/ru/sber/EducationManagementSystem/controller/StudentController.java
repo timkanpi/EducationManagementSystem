@@ -2,6 +2,7 @@ package ru.sber.EducationManagementSystem.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,8 +39,11 @@ public class StudentController {
      * @return страница "список студентов"
      */
     @GetMapping
-    public String getStudents(Model model) {
-        List<Student> students = studentService.getAllStudents();
+    public String getStudents(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
+                              @RequestParam(defaultValue = "name") String sortBy,
+                              @RequestParam(defaultValue = "asc") String order,
+                              Model model) {
+        Page<Student> students = studentService.getAllStudentsPaged(pageNumber,sortBy,order);
 
         model.addAttribute("students", students);
 

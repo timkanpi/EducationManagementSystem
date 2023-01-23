@@ -2,6 +2,11 @@ package ru.sber.EducationManagementSystem.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.sber.EducationManagementSystem.entity.Role;
 import ru.sber.EducationManagementSystem.entity.Student;
@@ -20,6 +25,9 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final RoleRepository roleRepository;
 
+    @Value("${page.size}")
+    private int pageSize;
+
     /**
      * Получить всех студентов
      *
@@ -28,6 +36,19 @@ public class StudentService {
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
+
+    /**
+     * Получить всех студентов в представлении "страница"
+     *
+     * @return список всех студентов
+     */
+    public Page<Student> getAllStudentsPaged(int pageNumber, String sortedBy, String order) {
+        Sort sorting = Sort.by(sortedBy);
+        Pageable paging = PageRequest.of(--pageNumber, pageSize, order.equals("asc") ? sorting.ascending() : sorting.descending());
+
+        return studentRepository.findAll(paging);
+    }
+
 
     /**
      * Найти студента по id
