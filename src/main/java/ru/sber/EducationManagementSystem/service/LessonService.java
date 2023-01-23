@@ -3,6 +3,7 @@ package ru.sber.EducationManagementSystem.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.sber.EducationManagementSystem.entity.Lesson;
+import ru.sber.EducationManagementSystem.exception.ItemNotFoundException;
 import ru.sber.EducationManagementSystem.repository.LessonRepository;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class LessonService {
      */
     public Lesson findById(Long id) {
         return lessonRepository.findById(id).orElseThrow(() -> {
-            throw new RuntimeException("Занятие c id=" + id + " не найдено");
+            throw new ItemNotFoundException("Занятие c id=" + id + " не найдено");
         });
     }
 

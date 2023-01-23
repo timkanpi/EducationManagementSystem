@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.sber.EducationManagementSystem.entity.Group;
+import ru.sber.EducationManagementSystem.exception.ItemNotFoundException;
 import ru.sber.EducationManagementSystem.repository.GroupRepository;
 
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ class GroupServiceTest {
     void shouldDisplayErrorWhenFindByIdIffIdIsNotExist() {
         when(groupRepository.findById(any())).thenReturn(Optional.empty());
 
-        RuntimeException exception = org.junit.jupiter.api.Assertions.assertThrowsExactly(RuntimeException.class, () -> groupService.findById(1L));
+        RuntimeException exception = org.junit.jupiter.api.Assertions.assertThrowsExactly(ItemNotFoundException.class, () -> groupService.findById(1L));
         Assertions.assertThat(exception).hasMessage("Группа id=1 не найдена");
     }
 }

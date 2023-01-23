@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head th:replace="fragments/header.html :: headMeta (title = 'Страница не найдена')"></head>
+<body>
+<header th:replace="fragments/header.html :: header"></header>
+
+<div class="container mt-5 error">
+    <spa>
+        404 Страница не найдена!
+    </spa>
+</div>
+
+</body>
+</html>
