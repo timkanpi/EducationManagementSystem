@@ -47,7 +47,8 @@
 
                 <div class="col-sm-6 mt-3" sec:authorize="hasRole('ADMIN')">
                     <button class="btn btn-primary" type="submit">Обновить</button>
-                    <a class="btn btn-primary" th:href="@{/student/{id}/delete(id=${student.id})}">Удалить</a>
+                    <a class="btn btn-primary" onclick="return  confirm('Вы уверены?')"
+                       th:href="@{/student/{id}/delete(id=${student.id})}">Удалить</a>
                 </div>
             </form>
         </div>
