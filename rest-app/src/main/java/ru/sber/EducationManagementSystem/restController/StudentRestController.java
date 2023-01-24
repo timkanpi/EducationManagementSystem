@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.sber.EducationManagementSystem.entity.Group;
-import ru.sber.EducationManagementSystem.entity.Mark;
 import ru.sber.EducationManagementSystem.entity.Student;
 import ru.sber.EducationManagementSystem.service.StudentService;
 
@@ -34,7 +31,6 @@ public class StudentRestController {
      * @param student создаваемый студент
      * @return ответ "ок", если студент создан успешно
      */
-//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<Object> createStudent(@Valid @RequestBody Student student) {
 
