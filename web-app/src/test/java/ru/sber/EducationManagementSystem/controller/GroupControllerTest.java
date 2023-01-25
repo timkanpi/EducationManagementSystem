@@ -1,7 +1,5 @@
 package ru.sber.EducationManagementSystem.controller;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,14 +40,6 @@ class GroupControllerTest {
     private GroupService groupService;
     @MockBean
     private UserService userService;
-
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
 
     @Test
     @DisplayName("Проверка отображения списка групп")
