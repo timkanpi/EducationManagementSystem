@@ -25,6 +25,7 @@ public class Student implements Serializable {
     @NotEmpty(message = "Заполните имя студента")
     private String name;
 
+    @NotNull(message = "Заполните возраст")
     @PositiveOrZero(message = "Возраст должен быть больше 0")
     private Integer age;
 
