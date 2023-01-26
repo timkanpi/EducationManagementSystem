@@ -4,14 +4,14 @@ values ('ROLE_ADMIN'),
        ('ROLE_TEACHER');
 
 insert into USERS(username, password)
-values ('pavel', '1'),
-       ('olga', '1'),
-       ('tolik', '1'),
-       ('viktor', '1'),
-       ('teacher1', '1'),
-       ('teacher2', '1'),
-       ('teacher3', '1'),
-       ('petr', '1');
+values ('pavel', '$2a$12$U9JOi25XeKl01PgYK/90OOGbdBEvjXpJw9qKYDimAiU//atBqjeiq'),
+       ('olga', '$2a$12$U9JOi25XeKl01PgYK/90OOGbdBEvjXpJw9qKYDimAiU//atBqjeiq'),
+       ('tolik', '$2a$12$U9JOi25XeKl01PgYK/90OOGbdBEvjXpJw9qKYDimAiU//atBqjeiq'),
+       ('viktor', '$2a$12$U9JOi25XeKl01PgYK/90OOGbdBEvjXpJw9qKYDimAiU//atBqjeiq'),
+       ('teacher1', '$2a$12$U9JOi25XeKl01PgYK/90OOGbdBEvjXpJw9qKYDimAiU//atBqjeiq'),
+       ('teacher2', '$2a$12$U9JOi25XeKl01PgYK/90OOGbdBEvjXpJw9qKYDimAiU//atBqjeiq'),
+       ('teacher3', '$2a$12$U9JOi25XeKl01PgYK/90OOGbdBEvjXpJw9qKYDimAiU//atBqjeiq'),
+       ('petr', '$2a$12$U9JOi25XeKl01PgYK/90OOGbdBEvjXpJw9qKYDimAiU//atBqjeiq');
 
 insert into USERS_ROLES
 values (1, 1),
