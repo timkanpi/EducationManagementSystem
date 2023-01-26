@@ -7,10 +7,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.sber.EducationManagementSystem.entity.Role;
 import ru.sber.EducationManagementSystem.entity.Student;
 import ru.sber.EducationManagementSystem.entity.User;
+import ru.sber.EducationManagementSystem.enums.RoleEnum;
 import ru.sber.EducationManagementSystem.exception.ItemNotFoundException;
 import ru.sber.EducationManagementSystem.repository.StudentRepository;
 
@@ -24,6 +26,8 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+
 
     @Value("${page.size}")
     private int pageSize;
@@ -69,11 +73,11 @@ public class StudentService {
      * @param student объект нового студента
      */
     public void createStudent(Student student) {
-        Role roleStudent = roleRepository.findByName("ROLE_STUDENT");
+        Role roleStudent = roleRepository.findByName(RoleEnum.ROLE_STUDENT);
 
         User user = User.builder()
                 .username("student_" + student.getStudTicket())
-                .password("pass")
+                .password(passwordEncoder.encode("pass"))
                 .roles(Set.of(roleStudent))
                 .build();
 
