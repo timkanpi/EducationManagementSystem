@@ -29,7 +29,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Import({WebSecurityConfig.class, UserService.class})
 @WebMvcTest({GroupController.class})
-class GroupControllerTest {
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+public class GroupControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -43,7 +44,7 @@ class GroupControllerTest {
 
     @Test
     @DisplayName("Проверка отображения списка групп")
-    void getGroups() throws Exception {
+    public void getGroups() throws Exception {
         List<Group> groupList = new ArrayList<>() {{
             add(new Group(1L, "группа1", emptyList(), emptyList()));
             add(new Group(2L, "группа2", emptyList(), emptyList()));
@@ -61,7 +62,7 @@ class GroupControllerTest {
     @Test
     @DisplayName("Проверка отображения страницы создания группы")
     @WithMockUser(username = "duke", roles = "ADMIN")
-    void newGroup() throws Exception {
+    public void newGroup() throws Exception {
         List<Student> studentsList = new ArrayList<>() {{
             add(new Student(1L, "Студент1", 1, 1, 1, null, null, emptyList()));
             add(new Student(2L, "Студент2", 1, 1, 1, null, null, emptyList()));
@@ -80,7 +81,7 @@ class GroupControllerTest {
     @Test
     @DisplayName("Проверка создания группы")
     @WithMockUser(username = "duke", roles = "ADMIN")
-    void createGroup() throws Exception {
+    public void createGroup() throws Exception {
         Group group = new Group(1L, "group_name", emptyList(), emptyList());
 
         mockMvc.perform(post("/group/create")
@@ -92,7 +93,7 @@ class GroupControllerTest {
     @Test
     @DisplayName("Проверка редиректа на форму логина при создании группы анонимным пользователем")
     @WithAnonymousUser
-    void createGroupWithAnonymousUser() throws Exception {
+    public void createGroupWithAnonymousUser() throws Exception {
         Group group = new Group(1L, "group_name", emptyList(), emptyList());
 
         mockMvc.perform(post("/group/create")
@@ -104,7 +105,7 @@ class GroupControllerTest {
     @Test
     @DisplayName("Проверка отображения детальной карточки группы")
     @WithMockUser(username = "duke", roles = "ADMIN")
-    void getGroup() throws Exception {
+    public void getGroup() throws Exception {
         Group group = new Group(1L, "group_name", emptyList(), emptyList());
 
         when(groupService.findById(any())).thenReturn(group);

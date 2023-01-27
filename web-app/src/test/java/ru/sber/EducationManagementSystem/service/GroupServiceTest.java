@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class GroupServiceTest {
+public class GroupServiceTest {
 
     @InjectMocks
     private GroupService groupService;
@@ -31,7 +31,7 @@ class GroupServiceTest {
 
     @Test
     @DisplayName("Проверка создания группы")
-    void createGroup() {
+    public void createGroup() {
         Group group = new Group(null, "группа1", emptyList(), emptyList());
 
         when(groupRepository.save(any())).thenReturn(group);
@@ -43,7 +43,7 @@ class GroupServiceTest {
 
     @Test
     @DisplayName("Проверка поиска всех групп")
-    void getAll() {
+    public void getAll() {
         List<Group> groupList = new ArrayList<>() {{
             add(new Group(1L, "группа1", emptyList(), emptyList()));
             add(new Group(2L, "группа2", emptyList(), emptyList()));
@@ -58,7 +58,7 @@ class GroupServiceTest {
 
     @Test
     @DisplayName("Проверка поиска группы по Id")
-    void findById() {
+    public void findById() {
         Group group = new Group(1L, "группа1", emptyList(), emptyList());
 
         when(groupRepository.findById(group.getId())).thenReturn(Optional.of(group));
@@ -70,7 +70,7 @@ class GroupServiceTest {
 
     @Test
     @DisplayName("Проверка ошибки при поиске группы по несуществующему id")
-    void shouldDisplayErrorWhenFindByIdIffIdIsNotExist() {
+    public void shouldDisplayErrorWhenFindByIdIffIdIsNotExist() {
         when(groupRepository.findById(any())).thenReturn(Optional.empty());
 
         RuntimeException exception = org.junit.jupiter.api.Assertions.assertThrowsExactly(ItemNotFoundException.class, () -> groupService.findById(1L));
