@@ -1,5 +1,10 @@
 package ru.sber.EducationManagementSystem.restController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,13 +17,15 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "api/v1", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
+@Tag(name = "Студенты", description = "Контроллер для работы с студентами")
+@RequestMapping(value = "api/v1/student", produces = MediaType.APPLICATION_JSON_VALUE)
 public class StudentRestController {
 
     private final StudentService studentService;
 
-    @GetMapping("/students")
+    @Operation(summary = "Получение списка студентов")
+    @GetMapping("/list")
     public ResponseEntity<List<Student>> getAllStudents() {
         List<Student> allStudents = studentService.getAllStudents();
 
@@ -31,6 +38,11 @@ public class StudentRestController {
      * @param student создаваемый студент
      * @return ответ "ок", если студент создан успешно
      */
+    @Operation(summary = "Создание студента")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "created",
+                    content = {@Content(mediaType = "application/json")})})
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
     public ResponseEntity<Object> createStudent(@Valid @RequestBody Student student) {
 
@@ -45,7 +57,8 @@ public class StudentRestController {
      * @param id    id студента
      * @return страница "детальная карточка студента"
      */
-    @GetMapping("/student/{id}")
+    @Operation(summary = "Получение студента по id")
+    @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable Long id) {
         Student student = studentService.findById(id);
 

@@ -5,17 +5,17 @@ package ru.sber.EducationManagementSystem.exception;
  * Программа выбрасывает это исключение, если:
  * Не найден объект в БД
  */
-public class ItemNotFoundException extends RuntimeException {
+public class ItemNotFoundRestException extends RuntimeException {
 
-    public ItemNotFoundException() {
+    public ItemNotFoundRestException() {
         super();
     }
 
-    public ItemNotFoundException(String message) {
+    public ItemNotFoundRestException(String message) {
         super(message);
     }
 
-    public ItemNotFoundException(String message, Throwable cause) {
+    public ItemNotFoundRestException(String message, Throwable cause) {
         super(message, cause);
     }
 }

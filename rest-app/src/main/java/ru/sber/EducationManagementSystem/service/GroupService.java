@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sber.EducationManagementSystem.entity.Group;
-import ru.sber.EducationManagementSystem.exception.ItemNotFoundException;
+import ru.sber.EducationManagementSystem.exception.ItemNotFoundRestException;
 import ru.sber.EducationManagementSystem.repository.GroupRepository;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class GroupService {
      */
     public Group findById(Long id) {
         return groupRepository.findById(id).orElseThrow(() -> {
-            throw new ItemNotFoundException("Группа id=" + id + " не найдена");
+            throw new ItemNotFoundRestException("Группа id=" + id + " не найдена");
         });
     }
 

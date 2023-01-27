@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.sber.EducationManagementSystem.entity.Student;
-import ru.sber.EducationManagementSystem.exception.ItemNotFoundException;
+import ru.sber.EducationManagementSystem.exception.ItemNotFoundRestException;
 import ru.sber.EducationManagementSystem.repository.StudentRepository;
 
 import java.util.List;
@@ -54,7 +54,7 @@ public class StudentService {
      */
     public Student findById(Long id) {
         return studentRepository.findById(id).orElseThrow(() -> {
-            throw new ItemNotFoundException("Студент c id=" + id + " не найден");
+            throw new ItemNotFoundRestException("Студент c id=" + id + " не найден");
         });
     }
 

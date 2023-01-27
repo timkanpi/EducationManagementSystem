@@ -6,18 +6,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.sber.EducationManagementSystem.exception.ExceptionMessageDto;
-import ru.sber.EducationManagementSystem.exception.ItemNotFoundException;
+import ru.sber.EducationManagementSystem.exception.ItemNotFoundRestException;
 
 @Slf4j
 @RestControllerAdvice
 public class ItemNotFoundRestHandler {
 
-    @ExceptionHandler(ItemNotFoundException.class)
-    public ResponseEntity<Object> handleItemNotFoundException(ItemNotFoundException exception) {
+    @ExceptionHandler(ItemNotFoundRestException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ExceptionMessageDto> handleItemNotFoundException(ItemNotFoundRestException exception) {
 
-        log.error("ItemNotFoundException: {}", exception);
+        log.error("ItemNotFoundRestException: {}", exception);
 
         ExceptionMessageDto exceptionMessageDto = new ExceptionMessageDto(exception.getMessage());
 
