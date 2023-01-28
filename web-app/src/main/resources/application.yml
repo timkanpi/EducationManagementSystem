@@ -2,10 +2,9 @@ spring:
   profiles:
     active: h2
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     defer-datasource-initialization: true
     properties:
       hibernate:

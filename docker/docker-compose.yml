@@ -1,22 +1,26 @@
-version: '1.0'
+version: "3.5"
 
 services:
   db:
     image: postgres
+    volumes:
+      - c:/postgresdata:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: admin
       POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
     ports:
       - 5432:5432
 
   education_system:
     image: my_container
-    profiles:
-      - postgres
     environment:
+      SPRING_PROFILES_ACTIVE: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
+      SPRING_SQL_INIT_MODE: never
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USERNAME:-admin}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-admin}
     ports:
       - 8080:8080
     depends_on:
       - db
-
