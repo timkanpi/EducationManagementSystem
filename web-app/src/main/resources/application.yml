@@ -17,4 +17,4 @@ logging:
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
 page:
-  size: 3
+  size: 5

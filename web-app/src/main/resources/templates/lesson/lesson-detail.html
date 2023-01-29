@@ -7,7 +7,7 @@
 <header th:replace="fragments/header.html :: header"></header>
 
 <div class="container mt-5">
-    <div class="row">
+    <div class="row mt-5">
         <div class="col-sm col-lg-8">
 
             <form th:action="@{/lesson/{id}(id=${lesson.id})}" th:method="put" th:object="${lesson}">
@@ -19,8 +19,6 @@
                     </div>
 
                     <input hidden type="text" th:field="*{group}">
-                    <input hidden type="text" th:field="*{homework}">
-
 
                     <div class="col-sm-6 form-group">
                         <label class="form-label" for="teacher">Преподаватель</label>
@@ -31,9 +29,15 @@
                             </option>
                         </select>
                     </div>
+
+                    <div class="col-sm-6">
+                        <label class="form-label" for="homework">Домашнее задание к занятию</label>
+                        <textarea class="form-control" id="homework" type="text" th:field="*{homework}">
+                        </textarea>
+                    </div>
                 </div>
 
-                <div class="row mt-3" sec:authorize="hasRole('ADMIN')">
+                <div class="row mt-3" sec:authorize="hasAnyRole('ADMIN', 'TEACHER')">
                     <div class="col-sm-6 col-lg-8">
                         <button class="btn btn-primary" type="submit">Обновить</button>
                     </div>
@@ -42,7 +46,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mt-5">
         <form th:action="@{/mark/addAll}" th:method="post" th:object="${markWrapper}">
             <div class="col-sm-8">
                 <table class=" table table-bordered table-hover">

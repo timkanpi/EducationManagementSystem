@@ -124,7 +124,7 @@ public class LessonController {
      * @param model         модель
      * @return страница "список занятий", если обновление прошло успешно
      */
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER')")
     @PostMapping("/{id}")
     public String updateLesson(@PathVariable("id") Long id,
                                @Valid @ModelAttribute("lesson") Lesson lesson,
