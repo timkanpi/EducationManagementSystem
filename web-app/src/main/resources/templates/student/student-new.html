@@ -43,6 +43,10 @@
                     </select>
                 </div>
 
+                <div th:if="${#fields.hasErrors('global')}">
+                    <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
+                </div>
+
                 <div class="col-sm-6 mt-3">
                     <button class="btn btn-primary" type="submit">Создать</button>
                 </div>

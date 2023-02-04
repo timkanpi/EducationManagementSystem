@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.sber.EducationManagementSystem.entity.Role;
 import ru.sber.EducationManagementSystem.entity.Student;
@@ -26,20 +25,10 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
     private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
-
+    private final UserService userService;
 
     @Value("${page.size}")
     private int pageSize;
-
-    /**
-     * Получить всех студентов
-     *
-     * @return список всех студентов
-     */
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
-    }
 
     /**
      * Получить всех студентов в представлении "страница"
@@ -52,7 +41,6 @@ public class StudentService {
 
         return studentRepository.findAll(paging);
     }
-
 
     /**
      * Найти студента по id
@@ -72,20 +60,22 @@ public class StudentService {
      *
      * @param student объект нового студента
      */
-    public void createStudent(Student student) {
+    public boolean createStudent(Student student) {
         Role roleStudent = roleRepository.findByName(RoleEnum.ROLE_STUDENT);
+        String username = "student_" + student.getStudTicket();
 
-        User user = User.builder()
-                .username("student_" + student.getStudTicket())
-                .password(passwordEncoder.encode("pass"))
-                .roles(Set.of(roleStudent))
-                .build();
+        if (userService.isExist(username))
+            return false;
+
+        User user = userService.createUser(username, Set.of(roleStudent));
 
         student.setUser(user);
 
         studentRepository.save(student);
 
         log.info("Студент создан: {}", student);
+
+        return true;
     }
 
     /**

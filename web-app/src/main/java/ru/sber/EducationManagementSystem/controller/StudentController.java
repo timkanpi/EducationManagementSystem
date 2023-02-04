@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import ru.sber.EducationManagementSystem.entity.Group;
 import ru.sber.EducationManagementSystem.entity.Mark;
@@ -43,7 +44,7 @@ public class StudentController {
                               @RequestParam(defaultValue = "name") String sortBy,
                               @RequestParam(defaultValue = "asc") String order,
                               Model model) {
-        Page<Student> students = studentService.getAllStudentsPaged(pageNumber,sortBy,order);
+        Page<Student> students = studentService.getAllStudentsPaged(pageNumber, sortBy, order);
 
         model.addAttribute("students", students);
 
@@ -68,6 +69,7 @@ public class StudentController {
 
     /**
      * Создать студента
+     * А так же создать юзера, для авториазации в системе
      *
      * @param student       создаваемый студент
      * @param bindingResult результат валидации студента
@@ -78,13 +80,17 @@ public class StudentController {
     @PostMapping("/create")
     public String createStudent(@Valid @ModelAttribute Student student, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            List<Group> groups = groupService.getAll();
+            model.addAttribute("groups", groupService.getAll());
 
-            model.addAttribute("groups", groups);
             return "student/student-new";
         }
 
-        studentService.createStudent(student);
+        if (!studentService.createStudent(student)) {
+            bindingResult.addError(new ObjectError("studentError", "Студент с таким студенческим билетом уже существет"));
+            model.addAttribute("groups", groupService.getAll());
+
+            return "student/student-new";
+        }
 
         return "redirect:/student";
     }

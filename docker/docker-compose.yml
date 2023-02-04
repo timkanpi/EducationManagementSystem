@@ -24,3 +24,8 @@ services:
       - 8080:8080
     depends_on:
       - db
+
+  rest_app:
+    image: rest-app
+    ports:
+      - 8081:8081

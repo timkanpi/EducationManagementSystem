@@ -19,3 +19,6 @@ logging:
 
 page:
   size: 3
+
+server:
+  port: 8081
