@@ -30,7 +30,7 @@ public class UserService implements UserDetailsService {
     /**
      * Поиск пользователя по username
      *
-     * @param username "логин" пользователя
+     * @param username email пользователя
      * @return true - если пользователь с username существует
      */
     public boolean isExist(String username) {
@@ -40,14 +40,14 @@ public class UserService implements UserDetailsService {
     /**
      * Создать пользователя в системе
      *
-     * @param username "логин пользователя"
+     * @param username "email пользователя"
      * @param roleSet  Set ролей пользователя
      * @return созданный пользователь
      */
-    public User createUser(String username, Set<Role> roleSet) {
+    public User createUser(String username, String password, Set<Role> roleSet) {
         User user = User.builder()
                 .username(username)
-                .password(passwordEncoder.encode("password"))
+                .password(passwordEncoder.encode(password))
                 .roles(roleSet)
                 .build();
 

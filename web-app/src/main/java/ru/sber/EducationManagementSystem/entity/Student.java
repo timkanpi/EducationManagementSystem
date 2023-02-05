@@ -25,6 +25,9 @@ public class Student implements Serializable {
     @NotEmpty(message = "Заполните имя студента")
     private String name;
 
+    @NotEmpty(message = "Заполните email")
+    private String email;
+
     @NotNull(message = "Заполните возраст")
     @PositiveOrZero(message = "Возраст должен быть больше 0")
     private Integer age;
@@ -55,6 +58,7 @@ public class Student implements Serializable {
         return "Student{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
                 ", age=" + age +
                 ", course=" + course +
                 ", studTicket=" + studTicket +

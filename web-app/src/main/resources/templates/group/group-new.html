@@ -19,7 +19,6 @@
                     <select class="form-control selectpicker" th:field="*{students}" id="students" multiple>
                         <option th:each="student : ${students}"
                                 th:value="${student.id}"
-
                                 th:text="${student.name}">
                         </option>
                     </select>

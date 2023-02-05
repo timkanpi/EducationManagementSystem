@@ -21,6 +21,9 @@ public class Lesson {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = "Заполните название занятия")
+    private String name;
+
     @NotNull(message = "Заполните дату проведения занятия")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;

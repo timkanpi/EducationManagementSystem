@@ -22,7 +22,7 @@
                 <tr th:each="lesson : ${lessons}">
                     <td th:text="${lesson.id}">Id</td>
                     <td>
-                        <a th:href="@{|/lesson/${lesson.id}|}" th:text="${lesson.date}"></a>
+                        <a th:href="@{|/lesson/${lesson.id}|}" th:text="${lesson.name}"></a>
                     </td>
                     <td th:text="${lesson.group.name}">группа</td>
                     <td th:text="${lesson.date}">дата занятия</td>

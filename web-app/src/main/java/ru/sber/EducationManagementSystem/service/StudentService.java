@@ -26,6 +26,7 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final RoleRepository roleRepository;
     private final UserService userService;
+    private final EmailService emailService;
 
     @Value("${page.size}")
     private int pageSize;
@@ -62,16 +63,18 @@ public class StudentService {
      */
     public boolean createStudent(Student student) {
         Role roleStudent = roleRepository.findByName(RoleEnum.ROLE_STUDENT);
-        String username = "student_" + student.getStudTicket();
 
-        if (userService.isExist(username))
+        if (userService.isExist(student.getEmail()))
             return false;
 
-        User user = userService.createUser(username, Set.of(roleStudent));
+        String password = "password";
+        User user = userService.createUser(student.getEmail(), password, Set.of(roleStudent));
 
         student.setUser(user);
 
         studentRepository.save(student);
+
+        emailService.sendSuccessfulRegistrationEmail(user.getUsername(), password);
 
         log.info("Студент создан: {}", student);
 

@@ -13,7 +13,13 @@
             <form th:action="@{/lesson/{id}(id=${lesson.id})}" th:method="put" th:object="${lesson}">
                 <div class="row">
                     <div class="col-sm-6">
-                        <label class="form-label" for="date">Дата проведения занятия</label>
+                        <label class="form-label" for="name">Название занятия</label>
+                        <input class="form-control" id="name" type="text" th:field="*{name}">
+                        <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"/>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label class="form-label" for="date">Дата проведения</label>
                         <input class="form-control" id="date" type="date" th:field="*{{date}}"></span>
                         <p th:if="${#fields.hasErrors('date')}" th:errorclass="error" th:errors="*{date}"/>
                     </div>
@@ -31,7 +37,7 @@
                     </div>
 
                     <div class="col-sm-6">
-                        <label class="form-label" for="homework">Домашнее задание к занятию</label>
+                        <label class="form-label" for="homework">Домашнее задание</label>
                         <textarea class="form-control" id="homework" type="text" th:field="*{homework}">
                         </textarea>
                     </div>

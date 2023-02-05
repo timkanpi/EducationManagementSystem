@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.sber.EducationManagementSystem.entity.Group;
 import ru.sber.EducationManagementSystem.entity.Mark;
 import ru.sber.EducationManagementSystem.entity.Student;
+import ru.sber.EducationManagementSystem.service.EmailService;
 import ru.sber.EducationManagementSystem.service.GroupService;
 import ru.sber.EducationManagementSystem.service.MarkService;
 import ru.sber.EducationManagementSystem.service.StudentService;
@@ -86,7 +87,7 @@ public class StudentController {
         }
 
         if (!studentService.createStudent(student)) {
-            bindingResult.addError(new ObjectError("studentError", "Студент с таким студенческим билетом уже существет"));
+            bindingResult.addError(new ObjectError("studentError", "Студент с таким email уже существет"));
             model.addAttribute("groups", groupService.getAll());
 
             return "student/student-new";
