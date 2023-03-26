@@ -30,11 +30,11 @@ public class Lesson {
 
     private String homework;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "group_id")
     private Group group;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
@@ -47,9 +47,6 @@ public class Lesson {
                 "id=" + id +
                 ", date=" + date +
                 ", homework='" + homework + '\'' +
-//                ", group=" + group +
-//                ", teacher=" + teacher +
-//                ", marks=" + marks +
                 '}';
     }
 }

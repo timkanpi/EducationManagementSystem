@@ -4,8 +4,8 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
-    defer-datasource-initialization: true
+      ddl-auto: none
+    defer-datasource-initialization: false
     properties:
       hibernate:
         format_sql: true
@@ -15,12 +15,15 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: pashaavilv666@gmail.com
-    password: ksbkcyfgxesifonm
-    #    password: Pashaavilv162431
+    username: ${MAIL_USERNAME:email}
+    password: ${MAIL_PASSWORD:password}
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
+  liquibase:
+#    enabled: false
+#    change-log: changelog.sql
+
 logging:
   level:
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE

@@ -8,7 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.sber.EducationManagementSystem.entity.Group;
 import ru.sber.EducationManagementSystem.entity.Lesson;
-import ru.sber.EducationManagementSystem.entity.Student;
 import ru.sber.EducationManagementSystem.entity.Teacher;
 import ru.sber.EducationManagementSystem.repository.GroupRepository;
 import ru.sber.EducationManagementSystem.repository.TeacherRepository;
@@ -41,7 +40,7 @@ public class LessonController {
      */
     @GetMapping
     public String getLessons(Model model) {
-        List<Lesson> lessonList = lessonService.findAll();
+        List<Lesson> lessonList = lessonService.findAllByOrderByDateDesc();
 
         model.addAttribute("lessons", lessonList);
 

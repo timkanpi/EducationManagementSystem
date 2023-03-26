@@ -24,6 +24,17 @@ public class LessonService {
     }
 
     /**
+     * Получить список всех занятий, отсортированных по дате (убывающей)
+     *
+     * @return List занятий
+     */
+    public List<Lesson> findAllByOrderByDateDesc() {
+        return lessonRepository.findAllByOrderByDateDesc();
+    }
+
+
+
+    /**
      * Найти занятие по id
      *
      * @param id id занятия

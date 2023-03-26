@@ -13,19 +13,18 @@
             <form th:action="@{/student/{id}(id=${student.id})}" th:method="post" th:object="${student}">
                 <div class="col-sm-6">
                     <label class="form-label" for="name">Имя студента</label>
-                    <input class="form-control" id="name" type="text" th:field="*{name}">
+                    <input  class="form-control" id="name" type="text" th:field="*{name}">
                     <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"/>
                 </div>
 
                 <div class="col-sm-6">
                     <label class="form-label" for="email">Email студента</label>
-                    <input class="form-control" id="email" type="email" th:field="*{email}">
-                    <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"/>
+                    <input disabled class="form-control" id="email" type="email" th:field="*{email}">
                 </div>
 
                 <div class="col-sm-6">
                     <label class="form-label" for="age">Возраст студента</label>
-                    <input class="form-control" id="age" type="number" th:field="*{age}">
+                    <input  class="form-control" id="age" type="number" th:field="*{age}">
                     <p th:if="${#fields.hasErrors('age')}" th:errorclass="error" th:errors="*{age}"/>
                 </div>
 

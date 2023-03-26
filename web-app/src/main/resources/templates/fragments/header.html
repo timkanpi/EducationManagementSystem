@@ -40,6 +40,10 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/lesson}">Занятия</a>
                 </li>
+                <li class="nav-item" sec:authorize="hasRole('STUDENT')">
+                    <a class="nav-link" th:href="@{/personal/lessons}">Мои занятия</a>
+                </li>
+
             </ul>
 
             <div sec:authorize="!isAuthenticated()">
